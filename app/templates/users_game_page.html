@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+    <body>
+
+         {% block page %}
+             Корзина
+         {% endblock %}
+         {% block menu %}
+            {{ super() }}
+        {% endblock %}
+
+
+        {% block content %}
+            {% if user %}
+                <div class="d-flex flex-column p-2">
+                    {% for game in page_obj['items'] %}
+                            <ul class="list-group accordion-flush list-group-horizontal m-1" id="gameParent{{game.id}}">
+                                <li class="list-group-item flex-grow-1">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed fw-semibold" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#game{{game.id}}"
+                                                    aria-expanded="false" aria-controls="game{{game.id}}">
+                                                {{game.title}}
+                                            </button>
+                                        </h2>
+                                        <div id="game{{game.id}}" class="accordion-collapse collapse"
+                                             data-bs-parent="#gameParent{{game.id}}">
+                                            <div class="accordion-body"
+                                                style="height: 4.5rem; overflow: hidden; opacity: 50%;">{{game.description}}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% block pagination %}
+            {{ super() }}
+        {% endblock %}
+
+
+         {% block error_message %}
+            {{error.error}}
+         {% endblock %}
+         {% block error_alert %}
+            {{ super() }}
+         {% endblock %}
+    </body>
+</html>
